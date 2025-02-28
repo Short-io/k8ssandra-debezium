@@ -1,7 +1,7 @@
 FROM eclipse-temurin:17-jre-alpine
 
 # Set environment variables
-ENV DEBEZIUM_VERSION=3.0.7.Final  # Adjust this to the latest available version
+ENV DEBEZIUM_VERSION=3.0.7.Final
 ENV DEBEZIUM_CONNECTOR_CASSANDRA_JAR=debezium-connector-cassandra-5-$DEBEZIUM_VERSION-jar-with-dependencies.jar
 ENV MAVEN_CENTRAL=https://repo1.maven.org/maven2/io/debezium/debezium-connector-cassandra-5/$DEBEZIUM_VERSION
 
