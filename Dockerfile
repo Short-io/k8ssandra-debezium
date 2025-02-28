@@ -18,4 +18,4 @@ RUN mkdir -p /opt/debezium && curl -L -o /opt/debezium/debezium-connector-jar-wi
 EXPOSE 8083
 
 # Run the Cassandra connector
-CMD ["java", "-jar", "/opt/debezium/debezium-connector-jar-with-dependencies.jar"]
+CMD ["java", "-jar", "/opt/debezium/debezium-connector-jar-with-dependencies.jar", "/etc/debezium/debezium.conf"]
