@@ -17,5 +17,9 @@ RUN mkdir -p /opt/debezium && curl -L -o /opt/debezium/debezium-connector-jar-wi
 # Expose Kafka Connect REST API port
 EXPOSE 8083
 
+COPY <<EOF /usr/share/nginx/html/index.html
+(your index page goes here)
+EOF
+
 # Run the Cassandra connector
-CMD ["java", "-jar", "/opt/debezium/debezium-connector-jar-with-dependencies.jar", "/etc/debezium/debezium.conf"]
+CMD ["sh", "-c", "cat /etc/cassandra/cassandra.yaml | grep -v batchlog_endpoint_strategy > /etc/cassandra/cassandra-debezium.yaml && java -jar /opt/debezium/debezium-connector-jar-with-dependencies.jar /etc/debezium/debezium.conf"
