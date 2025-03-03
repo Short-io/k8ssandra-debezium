@@ -22,4 +22,4 @@ COPY <<EOF /usr/share/nginx/html/index.html
 EOF
 
 # Run the Cassandra connector
-CMD ["sh", "-c", "cat /config/cassandra.yaml | grep -v batchlog_endpoint_strategy > /config/cassandra-debezium.yaml && java -jar /opt/debezium/debezium-connector-jar-with-dependencies.jar /etc/debezium/debezium.conf"]
+CMD ["sh", "-c", "cat /config/cassandra.yaml | grep -v batchlog_endpoint_strategy > /config/cassandra-debezium.yaml && echo \"commitlog_directory: /var/lib/cassandra/commitlog/\" >> /config/cassandra-debezium.yaml && java -jar /opt/debezium/debezium-connector-jar-with-dependencies.jar /etc/debezium/debezium.conf"]
