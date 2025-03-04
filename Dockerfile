@@ -11,7 +11,6 @@ WORKDIR /opt/debezium
 # Download Debezium Cassandra Connector JAR
 RUN mkdir -p /opt/debezium && curl -L -o /opt/debezium/debezium-connector-jar-with-dependencies.jar $MAVEN_CENTRAL/$DEBEZIUM_CONNECTOR_CASSANDRA_JAR
 RUN mkdir /opt/cassandra && ln -sf /config /opt/cassandra/conf && ln -sf /config /etc/cassandra
-RUN mkdir 
 # Expose Kafka Connect REST API port
 EXPOSE 8083
 
