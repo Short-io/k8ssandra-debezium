@@ -16,7 +16,7 @@ EXPOSE 8083
 
 COPY <<EOF /docker-init.sh
 cat /config/cassandra.yaml | sed 's/GossipingPropertyFileSnitch/SimpleSnitch/' | grep -v batchlog_endpoint_strategy > /config/cassandra-debezium.yaml
-nc -vz -w 2 127.0.0.1 7000
+nc -vz -w 2 127.0.0.1 9042
 exec $@
 EOF
 
