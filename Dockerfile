@@ -23,11 +23,21 @@ done
 exec "\$@"
 EOF
 
+COPY <<EOF /opt/debezium/log4j.properties
+log4j.rootLogger=INFO, A1
+
+log4j.appender.A1=org.apache.log4j.ConsoleAppender
+
+log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+log4j.appender.A1.layout.ConversionPattern=%-4r [%t] %-5p %c %x - %m%n
+EOF
+
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 # Run the Cassandra connector
 CMD [ \
   "java", "--add-exports", "java.base/jdk.internal.misc=ALL-UNNAMED", "--add-exports", "java.base/jdk.internal.ref=ALL-UNNAMED", "--add-exports", "java.base/sun.nio.ch=ALL-UNNAMED", "--add-exports", "java.management.rmi/com.sun.jmx.remote.internal.rmi=ALL-UNNAMED", "--add-exports", "java.rmi/sun.rmi.registry=ALL-UNNAMED", "--add-exports", "java.rmi/sun.rmi.server=ALL-UNNAMED", "--add-exports", "java.sql/java.sql=ALL-UNNAMED", "--add-opens", "java.base/java.lang.module=ALL-UNNAMED", "--add-opens", "java.base/jdk.internal.loader=ALL-UNNAMED", "--add-opens", "java.base/jdk.internal.ref=ALL-UNNAMED", "--add-opens", "java.base/jdk.internal.reflect=ALL-UNNAMED", "--add-opens", "java.base/jdk.internal.math=ALL-UNNAMED", "--add-opens", "java.base/jdk.internal.module=ALL-UNNAMED", "--add-opens", "java.base/jdk.internal.util.jar=ALL-UNNAMED", "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED", "--add-opens", "jdk.management/com.sun.management.internal=ALL-UNNAMED", "--add-opens=java.base/java.io=ALL-UNNAMED", \
   "-Dcassandra.storagedir=/var/lib/cassandra", "-Dlog4j.rootLogger=INFO, stdout, file", \
+  "-Dlog4j.configuration=file:/opt/debezium/log4j.properties", \
   "-jar", "/opt/debezium/debezium-connector-jar-with-dependencies.jar", "/etc/debezium/debezium.conf" \
   ]
