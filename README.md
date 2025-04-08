@@ -1,6 +1,6 @@
 # k8ssandra-debezium
 
-Attempt to use debezium as a sidecar for k8ssandra. Example K8ssandra cluster CRD:
+Debezium sidecar for k8ssandra. Example K8ssandra cluster CRD:
 
 ```yaml
     apiVersion: k8ssandra.io/v1alpha1
@@ -16,7 +16,7 @@ Attempt to use debezium as a sidecar for k8ssandra. Example K8ssandra cluster CR
             cdc_enabled: true
         datacenters:
         - containers:
-          - image: ghcr.io/short-io/k8ssandra-debezium:v0.0.20
+          - image: ghcr.io/short-io/k8ssandra-debezium:v0.1.0
             imagePullPolicy: IfNotPresent
             name: debezium
             ports:
@@ -88,6 +88,9 @@ stringData:
     
     snapshot.consistency=ONE
     snapshot.mode=NEVER
+  exporter.yaml: |
+    rules:
+    - pattern: ".*"
 kind: Secret
 metadata:
   name: debezium-credentials
